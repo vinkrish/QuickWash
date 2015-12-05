@@ -25,16 +25,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Available services and price"
+                android:text="@string/available_service"
                 android:textSize="20sp" />
 
             <in.vinkrish.quickwash.CustomViewPager
                 android:id="@+id/layoutScreen"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_height="150dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/slide_show_border"
-                android:layout_height="150dp">
+                android:layout_marginTop="10dp">
 
             </in.vinkrish.quickwash.CustomViewPager>
 
@@ -86,7 +85,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:background="?attr/colorPrimary"
-        android:text="PLACE  ORDER"
+        android:text="@string/place_order"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 

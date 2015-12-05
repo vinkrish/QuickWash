@@ -9,7 +9,18 @@
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
 
+    <string name="available_service">Available services and price</string>
+    <string name="place_order">PLACE  ORDER</string>
+
     <string name="title_activity_place_order">Place Order</string>
+
+    <string name="enter_details">Enter your details below :</string>
+    <string name="name">Name *</string>
+    <string name="mobile">Mobile *</string>
+    <string name="alternate_mob">Alternate Mobile</string>
+    <string name="email">Email</string>
+    <string name="address">Address *</string>
+    <string name="confirm_order">CONFORM  ORDER</string>
 
     <string name="wi">Wash + Iron</string>
     <string name="wi_desc">17 Rs per piece [min 10 pieces]-59 Rs per kg</string>

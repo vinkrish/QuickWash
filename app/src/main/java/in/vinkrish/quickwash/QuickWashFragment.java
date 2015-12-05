@@ -1,13 +1,18 @@
 package in.vinkrish.quickwash;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,33 +23,28 @@ import butterknife.ButterKnife;
 /**
  * Created by vinkrish on 30/11/15.
  */
-public class QuickWashFragment extends android.support.v4.app.Fragment {
+public class QuickWashFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     @Bind(R.id.rg)
     RadioGroup radioGroup;
     @Bind(R.id.layoutScreen)
     CustomViewPager layoutSlideShow;
+    @Bind(R.id.btn_order)
+    Button placeOrderBtn;
 
     private boolean pageChangeEnabled;
     private Handler slideShowHandler;
     private int SLIDE_SHOW_INDEX = 0;
     private final int SILDE_SHOW_INTERVAL = 3 * 1000;
+    private String service;
+    private Toast mToast;
     private List<Integer> layouts = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_quick_wash, container, false);
+
         ButterKnife.bind(this, view);
-
         init();
-
-        view.findViewById(R.id.btn_order).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), in.vinkrish.quickwash.PlaceOrderActivity.class);
-                intent.putExtra("service", "");
-                startActivity(intent);
-            }
-        });
 
         return view;
     }
@@ -63,6 +63,7 @@ public class QuickWashFragment extends android.support.v4.app.Fragment {
 
         radioGroup.setOnCheckedChangeListener(radioButtonChanged);
 
+        placeOrderBtn.setOnClickListener(this);
     }
 
     private RadioGroup.OnCheckedChangeListener radioButtonChanged = new RadioGroup.OnCheckedChangeListener() {
@@ -72,22 +73,28 @@ public class QuickWashFragment extends android.support.v4.app.Fragment {
                 case R.id.wi_rb:
                     layoutSlideShow.setCurrentItem(0);
                     removeSlideShow();
+                    service = "wash + iron";
                     break;
                 case R.id.w_rb:
                     layoutSlideShow.setCurrentItem(1);
                     removeSlideShow();
+                    service = "wash";
                     break;
                 case R.id.i_rb:
                     layoutSlideShow.setCurrentItem(2);
                     removeSlideShow();
+                    service = "iron";
                     break;
                 case R.id.dc_rb:
                     layoutSlideShow.setCurrentItem(3);
                     removeSlideShow();
+                    service = "dryclean";
                     break;
                 default:
                     break;
             }
+
+            if (mToast != null) mToast.cancel();
 
             if (!pageChangeEnabled) {
                 pageChangeEnabled = true;
@@ -146,6 +153,46 @@ public class QuickWashFragment extends android.support.v4.app.Fragment {
             };
             // Schedule the first execution
             slideShowHandler.postDelayed(slideShow, SILDE_SHOW_INTERVAL);
+        }
+    }
+
+    private void showToast(String msg) {
+        if (mToast != null) mToast.cancel();
+
+        mToast = Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG);
+        mToast.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_order:
+                placeOrder();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo nf = cm.getActiveNetworkInfo();
+        if (nf != null && nf.isConnectedOrConnecting()) return true;
+        else return false;
+    }
+
+    public void placeOrder() {
+        if (isOnline()) {
+            if (service != null && service != "") {
+                Intent intent = new Intent(getActivity(), in.vinkrish.quickwash.PlaceOrderActivity.class);
+                intent.putExtra("service", service);
+                startActivity(intent);
+            } else {
+                showToast("Please select service");
+            }
+        } else {
+            showToast("Network isn't available");
         }
     }
 }

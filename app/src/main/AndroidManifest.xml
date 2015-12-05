@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.vinkrish.quickwash">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +26,9 @@
             android:label="@string/title_activity_place_order"
             android:parentActivityName=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <provider
+            android:authorities="in.vinkrish.quickwash"
+            android:name=".data.QuickWashProvider"/>
     </application>
 
 </manifest>
