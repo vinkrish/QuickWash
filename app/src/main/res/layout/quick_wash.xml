@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/available_service"
+                android:textColor="@color/state_select"
                 android:textSize="20sp" />
 
             <in.vinkrish.quickwash.CustomViewPager
@@ -38,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Select one of below services :"
+                android:textColor="@color/state_select"
                 android:textSize="20sp" />
 
             <RadioGroup
@@ -50,25 +52,33 @@
                     android:id="@+id/wi_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wi" />
+                    android:paddingLeft="5dp"
+                    android:text="@string/wi"
+                    android:textColor="@color/state_select" />
 
                 <RadioButton
                     android:id="@+id/w_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/w" />
+                    android:paddingLeft="5dp"
+                    android:text="@string/w"
+                    android:textColor="@color/state_select" />
 
                 <RadioButton
                     android:id="@+id/i_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/i" />
+                    android:paddingLeft="5dp"
+                    android:text="@string/i"
+                    android:textColor="@color/state_select" />
 
                 <RadioButton
                     android:id="@+id/dc_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dc" />
+                    android:paddingLeft="5dp"
+                    android:text="@string/dc"
+                    android:textColor="@color/state_select" />
             </RadioGroup>
 
         </LinearLayout>

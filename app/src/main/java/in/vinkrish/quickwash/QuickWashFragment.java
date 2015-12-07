@@ -73,22 +73,22 @@ public class QuickWashFragment extends android.support.v4.app.Fragment implement
                 case R.id.wi_rb:
                     layoutSlideShow.setCurrentItem(0);
                     removeSlideShow();
-                    service = "wash + iron";
+                    service = "Wash + Iron";
                     break;
                 case R.id.w_rb:
                     layoutSlideShow.setCurrentItem(1);
                     removeSlideShow();
-                    service = "wash";
+                    service = "Wash";
                     break;
                 case R.id.i_rb:
                     layoutSlideShow.setCurrentItem(2);
                     removeSlideShow();
-                    service = "iron";
+                    service = "Iron";
                     break;
                 case R.id.dc_rb:
                     layoutSlideShow.setCurrentItem(3);
                     removeSlideShow();
-                    service = "dryclean";
+                    service = "Dryclean";
                     break;
                 default:
                     break;
@@ -195,4 +195,12 @@ public class QuickWashFragment extends android.support.v4.app.Fragment implement
             showToast("Network isn't available");
         }
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        removeSlideShow();
+    }
+
 }

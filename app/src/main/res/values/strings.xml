@@ -11,7 +11,7 @@
 
     <string name="available_service">Available services and price</string>
     <string name="place_order">PLACE  ORDER</string>
-    <string name="your_order">Your orders</string>
+    <string name="your_order">Your orders :</string>
 
     <string name="title_activity_place_order">Place Order</string>
 
