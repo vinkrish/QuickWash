@@ -23,13 +23,13 @@ public class QuickWashDBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_QUICKWASH_TABLE = "CREATE TABLE " + QuickWashEntry.TABLE_NAME + " (" +
                 QuickWashEntry._ID + " INTEGER PRIMARY KEY," +
                 QuickWashEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                QuickWashEntry.COLUMN_MOBILE + " INTEGER NOT NULL, " +
-                QuickWashEntry.COLUMN_ALTERNATE_MOBILE + " INTEGER NOT NULL, " +
+                QuickWashEntry.COLUMN_MOBILE + " TEXT NOT NULL, " +
+                QuickWashEntry.COLUMN_ALTERNATE_MOBILE + " TEXT NOT NULL, " +
                 QuickWashEntry.COLUMN_EMAIL + " TEXT NOT NULL, " +
                 QuickWashEntry.COLUMN_ADDRESS + " TEXT NOT NULL, " +
-                QuickWashEntry.COLUMN_PINCODE + " INTEGER NOT NULL, " +
+                QuickWashEntry.COLUMN_PINCODE + " TEXT NOT NULL, " +
                 QuickWashEntry.COLUMN_SERVICE + " TEXT NOT NULL, " +
-                QuickWashEntry.COLUMN_DATE + " TEXT NOT NULL, " +
+                QuickWashEntry.COLUMN_DATE + " TEXT NOT NULL " +
                 " );";
 
         db.execSQL(SQL_CREATE_QUICKWASH_TABLE);

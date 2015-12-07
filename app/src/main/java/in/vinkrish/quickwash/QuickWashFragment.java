@@ -41,7 +41,7 @@ public class QuickWashFragment extends android.support.v4.app.Fragment implement
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_quick_wash, container, false);
+        View view = inflater.inflate(R.layout.quick_wash, container, false);
 
         ButterKnife.bind(this, view);
         init();

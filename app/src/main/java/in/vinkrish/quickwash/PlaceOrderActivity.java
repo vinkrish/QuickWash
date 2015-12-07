@@ -1,44 +1,65 @@
 package in.vinkrish.quickwash;
 
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import in.vinkrish.quickwash.data.Order;
+import in.vinkrish.quickwash.data.OrderResponse;
+import in.vinkrish.quickwash.data.QuickWashCRUD;
+import in.vinkrish.quickwash.data.QuickWashContract.QuickWashEntry;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class PlaceOrderActivity extends AppCompatActivity {
     @Bind(R.id.name_et)
-    EditText name;
+    EditText nameET;
     @Bind(R.id.mobile_et)
-    EditText mobile;
+    EditText mobileET;
     @Bind(R.id.alternate_mob_et)
-    EditText alternateMobile;
+    EditText alternateMobileET;
     @Bind(R.id.email_et)
-    EditText email;
+    EditText emailET;
     @Bind(R.id.address_et)
-    EditText address;
+    EditText addressET;
     @Bind(R.id.pincode_spn)
-    Spinner pincode;
-    @Bind(R.id.confirm_order_btn)
-    Button confirmButton;
+    Spinner pincodeSpinner;
 
     private CoordinatorLayout coordinatorLayout;
-    private Snackbar mSnackBar;
+    private ApiEndPointInterface apiService;
+    private Retrofit retrofit;
+    private Order order;
+    private String service;
+    private String name, mobile, alternateMobile, email, address, pincode;
     private List<String> pincodeList = new ArrayList<>();
+    private static final String BASE_URL = "http://www.vingel.in";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +76,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null)
+            service = (String) bundle.get("service");
+
         pincodeList.add("Select your area pincode");
         pincodeList.add("560036");
         pincodeList.add("560037");
@@ -65,7 +91,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_header, pincodeList);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown);
-        pincode.setAdapter(adapter);
+        pincodeSpinner.setAdapter(adapter);
     }
 
     protected boolean isOnline() {
@@ -78,7 +104,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
     public void confirmOrder(View v) {
         if (isOnline()) {
             if (validateInput()) {
-
+                makeRequestObject();
+                //requestOrderSync();
+                //requestOrderAsync();
+                new OrderAsyncTak().execute();
             }
         } else {
             showSnackBar("Network isn't available");
@@ -92,22 +121,23 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     private boolean validateInput() {
-        if (name.getText().toString().equals("")) {
+        prepareText();
+        if (name.equals("")) {
             showSnackBar("Please enter your name");
             return false;
-        } else if (mobile.getText().toString().equals("")) {
+        } else if (mobile.equals("")) {
             showSnackBar("Please enter your mobile number");
             return false;
-        } else if (mobile.getText().toString().length() != 10) {
+        } else if (mobile.length() != 10) {
             showSnackBar("Please enter 10 digit mobile number");
             return false;
-        } else if (address.getText().toString().equals("")) {
+        } else if (address.equals("")) {
             showSnackBar("Please enter your address");
             return false;
-        } else if (pincode.getSelectedItemPosition() == 0) {
+        } else if (pincodeSpinner.getSelectedItemPosition() == 0) {
             showSnackBar("Please select area pincode");
             return false;
-        } else if (!email.getText().toString().equals("")) {
+        } else if (!email.equals("")) {
             if (!validateEmail()) {
                 showSnackBar("Please enter valid email");
                 return false;
@@ -117,15 +147,146 @@ public class PlaceOrderActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean validateEmail() {
-        String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        if (email.getText().toString().matches(EMAIL_REGEX)) {
-            return true;
-        }
-        return false;
+    private void prepareText() {
+        name = nameET.getText().toString();
+        mobile = mobileET.getText().toString();
+        alternateMobile = alternateMobileET.getText().toString();
+        email = emailET.getText().toString();
+        address = addressET.getText().toString();
+        pincode = pincodeSpinner.getSelectedItem().toString();
     }
 
-    private void requestOrder() {
+    private boolean validateEmail() {
+        //String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches()) {
+            return true;
+        } else return false;
+    }
+
+    private void makeRequestObject() {
+        order = new Order();
+        order.setName(name);
+        order.setMobile(mobile);
+        order.setAlternateMobile(alternateMobile);
+        order.setEmail(email);
+        order.setAddress(address);
+        order.setPincode(pincode);
+        order.setService(service);
+        order.setDate(getToday());
+    }
+
+    private ContentValues createOrderValues() {
+        ContentValues orderValues = new ContentValues();
+        orderValues.put(QuickWashEntry.COLUMN_NAME, name);
+        orderValues.put(QuickWashEntry.COLUMN_MOBILE, mobile);
+        orderValues.put(QuickWashEntry.COLUMN_ALTERNATE_MOBILE, alternateMobile);
+        orderValues.put(QuickWashEntry.COLUMN_EMAIL, email);
+        orderValues.put(QuickWashEntry.COLUMN_ADDRESS, address);
+        orderValues.put(QuickWashEntry.COLUMN_PINCODE, pincode);
+        orderValues.put(QuickWashEntry.COLUMN_SERVICE, service);
+        orderValues.put(QuickWashEntry.COLUMN_DATE, getToday());
+        return orderValues;
+    }
+
+    private String getToday() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date today = new Date();
+        return dateFormat.format(today);
+    }
+
+    //Synchronous call
+    private void requestOrderSync() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .build();
+
+        apiService = retrofit.create(ApiEndPointInterface.class);
+
+        apiService.saveOrder(order, new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(Response<OrderResponse> response, Retrofit retrofit) {
+                int responseCode = response.code();
+                OrderResponse responseOrder = response.body();
+                if (responseCode == 200 && responseOrder.getStatus().equals("success")) {
+                    Log.d("oh yeah", "inserted");
+                    QuickWashCRUD.inertOrder(PlaceOrderActivity.this, createOrderValues());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("failed", "asdfadsf asdfadfasf.adf......");
+            }
+        });
+
+    }
+
+    //Asynchronous call
+    private void requestOrderAsync() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        apiService = retrofit.create(ApiEndPointInterface.class);
+
+        apiService.saveNewOrder(order).enqueue(new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(Response<OrderResponse> response, Retrofit retrofit) {
+                int responseCode = response.code();
+                OrderResponse responseOrder = response.body();
+                if (responseCode == 200 && responseOrder.getStatus().equals("success")) {
+                    Log.d("oh yeah", "inserted");
+                    //QuickWashCRUD.inertOrder(PlaceOrderActivity.this, createOrderValues());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("failed", "response");
+            }
+        });
+
+    }
+
+    class OrderAsyncTak extends AsyncTask<Void, Void, Void> {
+        ProgressDialog pDialog = new ProgressDialog(PlaceOrderActivity.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog.setMessage("Confirming Order...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            apiService = retrofit.create(ApiEndPointInterface.class);
+
+            OrderResponse orderResponse = null;
+            try {
+                orderResponse = apiService.saveNewOrder(order).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.d("response", orderResponse.getStatus());
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
+            QuickWashCRUD.inertOrder(PlaceOrderActivity.this, createOrderValues());
+            pDialog.dismiss();
+        }
 
     }
 

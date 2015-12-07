@@ -14,16 +14,13 @@ import java.util.List;
 public class QuickWashCRUD {
 
 
-    public long inertOrder (Context context, ContentValues values) {
+    public static void inertOrder (Context context, ContentValues values) {
         QuickWashDBHelper dbHelper = new QuickWashDBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        long orderRowId;
-        orderRowId = db.insert(QuickWashContract.QuickWashEntry.TABLE_NAME, null, values);
-        return orderRowId;
+        db.insert(QuickWashContract.QuickWashEntry.TABLE_NAME, null, values);
     }
 
-    public List<Order> getOrder (Context context) {
+    public static List<Order> getOrder (Context context) {
         QuickWashDBHelper dbHelper = new QuickWashDBHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(
@@ -38,22 +35,22 @@ public class QuickWashCRUD {
         List<Order> orderList = new ArrayList<>();
 
         int nameColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
-        int mobileColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
-        int alternateMobileColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
-        int emailColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
-        int addressColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
-        int pincodeColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
+        int mobileColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_MOBILE);
+        int alternateMobileColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_ALTERNATE_MOBILE);
+        int emailColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_EMAIL);
+        int addressColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_ADDRESS);
+        int pincodeColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_PINCODE);
         int serviceColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_SERVICE);
-        int dateColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_NAME);
+        int dateColumn = cursor.getColumnIndex(QuickWashContract.QuickWashEntry.COLUMN_DATE);
 
         while (cursor.moveToNext()){
             Order o = new Order();
             o.setName(cursor.getString(nameColumn));
-            o.setMobile(cursor.getInt(mobileColumn));
-            o.setAlternateMobile(cursor.getInt(alternateMobileColumn));
+            o.setMobile(cursor.getString(mobileColumn));
+            o.setAlternateMobile(cursor.getString(alternateMobileColumn));
             o.setEmail(cursor.getString(emailColumn));
             o.setAddress(cursor.getString(addressColumn));
-            o.setPincode(cursor.getInt(pincodeColumn));
+            o.setPincode(cursor.getString(pincodeColumn));
             o.setService(cursor.getString(serviceColumn));
             o.setDate(cursor.getString(dateColumn));
             orderList.add(o);

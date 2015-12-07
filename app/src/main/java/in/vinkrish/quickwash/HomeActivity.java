@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.order_item:
-
+                        ReplaceFragment.replace(new ViewOrders(), getSupportFragmentManager());
                         return true;
 
                     case R.id.contact_item:
