@@ -1,4 +1,4 @@
-package in.vinkrish.quickwash;
+package in.vinkrish.quickwash.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,9 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import in.vinkrish.quickwash.adapter.MyRecyclerAdapter;
+import in.vinkrish.quickwash.R;
 import in.vinkrish.quickwash.data.Order;
 import in.vinkrish.quickwash.data.QuickWashCRUD;
 

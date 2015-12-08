@@ -1,4 +1,4 @@
-package in.vinkrish.quickwash;
+package in.vinkrish.quickwash.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,11 +19,14 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import in.vinkrish.quickwash.util.CustomViewPager;
+import in.vinkrish.quickwash.R;
+import in.vinkrish.quickwash.adapter.ScreenSliderAdapter;
 
 /**
  * Created by vinkrish on 30/11/15.
  */
-public class QuickWashFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
+public class QuickWashService extends android.support.v4.app.Fragment implements View.OnClickListener {
     @Bind(R.id.rg)
     RadioGroup radioGroup;
     @Bind(R.id.layoutScreen)

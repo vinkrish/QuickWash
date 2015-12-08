@@ -1,4 +1,4 @@
-package in.vinkrish.quickwash;
+package in.vinkrish.quickwash.adapter;
 
 //import android.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
+
+import in.vinkrish.quickwash.fragment.ServiceFragment;
 
 public class ScreenSliderAdapter extends FragmentPagerAdapter {
 

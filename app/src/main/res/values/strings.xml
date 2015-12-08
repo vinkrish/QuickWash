@@ -35,4 +35,8 @@
     <string name="dc">Dry Clean</string>
     <string name="dc_desc">30 Rs per piece [min 10 pieces]</string>
 
+    <string name="reach_us">Reach Us</string>
+    <string name="contact_mobile">9164065688</string>
+    <string name="contact_email">quickwashbangalore@gmail.com</string>
+
 </resources>

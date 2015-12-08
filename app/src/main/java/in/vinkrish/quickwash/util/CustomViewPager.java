@@ -1,4 +1,4 @@
-package in.vinkrish.quickwash;
+package in.vinkrish.quickwash.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -24,7 +24,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="right"
             android:text="@string/home"
-            android:textColor="@color/state_select"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
 
         <TextView
@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="3dp"
-            android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/home"
             android:textColor="@color/colorPrimary"

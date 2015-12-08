@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
+import in.vinkrish.quickwash.fragment.AboutUs;
+import in.vinkrish.quickwash.fragment.QuickWashService;
+import in.vinkrish.quickwash.fragment.ViewOrders;
 
 public class HomeActivity extends AppCompatActivity {
     private NavigationView navigationView;
@@ -35,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
 
                     case R.id.dashboard_item:
-                        ReplaceFragment.replace(new QuickWashFragment(), getSupportFragmentManager());
+                        ReplaceFragment.replace(new QuickWashService(), getSupportFragmentManager());
                         return true;
 
                     case R.id.order_item:
@@ -43,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.contact_item:
-
+                        ReplaceFragment.replace(new AboutUs(), getSupportFragmentManager());
                         return true;
 
                     default:
@@ -79,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void selectDefaultFragment() {
-        ReplaceFragment.replace(new QuickWashFragment(), getSupportFragmentManager());
+        ReplaceFragment.replace(new QuickWashService(), getSupportFragmentManager());
     }
 
 }

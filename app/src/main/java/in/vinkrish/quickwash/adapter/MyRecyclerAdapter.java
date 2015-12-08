@@ -1,4 +1,4 @@
-package in.vinkrish.quickwash;
+package in.vinkrish.quickwash.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.vinkrish.quickwash.R;
 import in.vinkrish.quickwash.data.Order;
 
 /**
@@ -16,12 +17,10 @@ import in.vinkrish.quickwash.data.Order;
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CustomViewHolder> {
     private List<Order> orderList;
-    private Context mContext;
     private LayoutInflater inflater;
 
     public MyRecyclerAdapter(Context context, List<Order> orderList) {
         this.orderList = orderList;
-        this.mContext = context;
         inflater = LayoutInflater.from(context);
     }
 
