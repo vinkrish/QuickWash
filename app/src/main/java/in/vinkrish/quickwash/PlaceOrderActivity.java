@@ -3,6 +3,7 @@ package in.vinkrish.quickwash;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -285,7 +286,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
         protected void onPostExecute(Void v) {
             super.onPostExecute(v);
             QuickWashCRUD.inertOrder(PlaceOrderActivity.this, createOrderValues());
+            showSnackBar("Confirmed, we will contact you soon");
             pDialog.dismiss();
+            Intent intent = new Intent(PlaceOrderActivity.this, in.vinkrish.quickwash.HomeActivity.class);
+            startActivity(intent);
         }
 
     }
