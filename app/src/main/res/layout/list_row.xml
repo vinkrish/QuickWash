@@ -17,27 +17,39 @@
         android:paddingRight="5dp"
         android:paddingTop="5dp">
 
-        <TextView
-            android:id="@+id/date_tv"
+        <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:gravity="right"
-            android:text="@string/home"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            android:layout_marginTop="5dp"
+            android:stretchColumns="*">
 
-        <TextView
-            android:id="@+id/service_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="3dp"
-            android:gravity="center"
-            android:text="@string/home"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TableRow android:id="@+id/rowId">
+
+                <TextView
+                    android:id="@+id/service_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/home"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/home"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+            </TableRow>
+
+        </TableLayout>
 
         <View
             android:layout_width="match_parent"
