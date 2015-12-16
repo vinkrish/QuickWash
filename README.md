@@ -5,8 +5,4 @@ simple laundry service app
 
 ![Alt text](img/Order.png "Order")
 
-![Alt text](img/Booked.png "Booked")
-
-![Alt text](img/Contact.png "Contact")
-
-![Alt text](img/Navigation.png "Navigation")
+![Alt text](img/Navigate.png "Navigation")
