@@ -12,10 +12,10 @@ import retrofit.http.POST;
  */
 public interface ApiEndPointInterface {
 
-    @POST("/order/new/index.php")
+    @POST("/quck_wash/index.php")
     void saveOrder (@Body Order order, Callback<OrderResponse> callBack);
 
-    @POST("/order/new/index.php")
+    @POST("/quick_wash/index.php")
     Call<OrderResponse> saveNewOrder (@Body Order order);
 
 }

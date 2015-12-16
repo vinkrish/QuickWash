@@ -1,6 +1,7 @@
 package in.vinkrish.quickwash.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,12 @@ import in.vinkrish.quickwash.data.Order;
  * Created by vinkrish on 07/12/15.
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CustomViewHolder> {
+    private Context context;
     private List<Order> orderList;
     private LayoutInflater inflater;
 
     public MyRecyclerAdapter(Context context, List<Order> orderList) {
+        this.context = context;
         this.orderList = orderList;
         inflater = LayoutInflater.from(context);
     }
@@ -36,12 +39,20 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         Order orderItem = orderList.get(i);
 
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf");
+
         customViewHolder.dateTV.setText(orderItem.getDate());
         customViewHolder.serviceTV.setText(orderItem.getService());
         customViewHolder.nameTV.setText(orderItem.getName());
         customViewHolder.mobileTV.setText(orderItem.getMobile());
         customViewHolder.addressTV.setText(orderItem.getAddress());
         customViewHolder.pincodeTV.setText(orderItem.getPincode());
+
+        customViewHolder.dateTV.setTypeface(tf);
+        customViewHolder.nameTV.setTypeface(tf);
+        customViewHolder.mobileTV.setTypeface(tf);
+        customViewHolder.addressTV.setTypeface(tf);
+        customViewHolder.pincodeTV.setTypeface(tf);
     }
 
     @Override

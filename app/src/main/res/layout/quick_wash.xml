@@ -52,7 +52,10 @@
                     android:id="@+id/wi_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
                     android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
                     android:text="@string/wi"
                     android:textColor="@color/state_select" />
 
@@ -60,7 +63,10 @@
                     android:id="@+id/w_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
                     android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
                     android:text="@string/w"
                     android:textColor="@color/state_select" />
 
@@ -68,7 +74,10 @@
                     android:id="@+id/i_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
                     android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
                     android:text="@string/i"
                     android:textColor="@color/state_select" />
 
@@ -76,7 +85,10 @@
                     android:id="@+id/dc_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
                     android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
                     android:text="@string/dc"
                     android:textColor="@color/state_select" />
             </RadioGroup>
