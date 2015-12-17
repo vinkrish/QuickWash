@@ -25,10 +25,11 @@
             android:name=".PlaceOrderActivity"
             android:label="@string/title_activity_place_order"
             android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <provider
-            android:authorities="in.vinkrish.quickwash"
-            android:name=".data.QuickWashProvider"/>
+            android:name=".data.QuickWashProvider"
+            android:authorities="in.vinkrish.quickwash" />
     </application>
 
 </manifest>

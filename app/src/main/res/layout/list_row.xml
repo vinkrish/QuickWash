@@ -32,7 +32,7 @@
                     android:id="@+id/service_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:layout_marginBottom="3dp"
                     android:text="@string/home"
                     android:textColor="@color/colorPrimary"
@@ -43,8 +43,7 @@
                     android:id="@+id/date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="right|center_vertical"
+                    android:gravity="end|center_vertical"
                     android:text="@string/home"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
@@ -63,8 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:fontFamily="sans-serif-light"
-            android:gravity="left"
+            android:gravity="start"
             android:text="@string/home"
             android:textColor="@color/text_color"
             android:textSize="18sp" />
@@ -74,8 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:fontFamily="sans-serif-light"
-            android:gravity="left"
+            android:gravity="start"
             android:text="@string/home"
             android:textColor="@color/text_color"
             android:textSize="18sp" />
@@ -85,8 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:fontFamily="sans-serif-light"
-            android:gravity="left"
+            android:gravity="start"
             android:text="@string/home"
             android:textColor="@color/text_color"
             android:textSize="18sp" />
@@ -96,8 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:fontFamily="sans-serif-light"
-            android:gravity="left"
+            android:gravity="start"
             android:text="@string/home"
             android:textColor="@color/text_color"
             android:textSize="18sp" />

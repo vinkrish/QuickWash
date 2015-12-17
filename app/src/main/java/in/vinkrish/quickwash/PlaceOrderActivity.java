@@ -59,7 +59,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private String service;
     private String name, mobile, alternateMobile, email, address, pincode;
     private List<String> pincodeList = new ArrayList<>();
-    private static final String BASE_URL = "http://locallhost";
+    private static final String BASE_URL = "http://localhost";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

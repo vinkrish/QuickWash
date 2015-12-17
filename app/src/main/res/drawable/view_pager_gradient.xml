@@ -6,8 +6,7 @@
         android:angle="90"
         android:centerColor="#E8EAF6"
         android:endColor="#9FA8DA"
-        android:startColor="#E8EAF6"
-        android:gradientRadius="700"
-        android:type="radial" />
+        android:startColor="#9FA8DA"
+        android:type="linear" />
 
 </shape>

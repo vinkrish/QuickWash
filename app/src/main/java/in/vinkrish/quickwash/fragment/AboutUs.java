@@ -30,19 +30,19 @@ public class AboutUs extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
 
-                /*Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"quickwashbangalore@gmail.com"});
-                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Service");
-                startActivity(Intent.createChooser(emailIntent, "Send mail..."));*/
+                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "QuickWash Service");
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 
-                Uri uri = Uri.parse("mailto:" + "quickwashbangalore@gmail.com")
+                /*Uri uri = Uri.parse("mailto:" + "quickwashbangalore@gmail.com")
                         .buildUpon()
-                        .appendQueryParameter("subject", "service")
+                        .appendQueryParameter("subject", "QuickWash Service")
                         .build();
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));*/
 
             }
         });
