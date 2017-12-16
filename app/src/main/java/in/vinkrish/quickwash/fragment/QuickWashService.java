@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.vinkrish.quickwash.util.CustomViewPager;
 import in.vinkrish.quickwash.R;
@@ -27,12 +27,9 @@ import in.vinkrish.quickwash.adapter.ScreenSliderAdapter;
  * Created by vinkrish on 30/11/15.
  */
 public class QuickWashService extends android.support.v4.app.Fragment implements View.OnClickListener {
-    @Bind(R.id.rg)
-    RadioGroup radioGroup;
-    @Bind(R.id.layoutScreen)
-    CustomViewPager layoutSlideShow;
-    @Bind(R.id.btn_order)
-    Button placeOrderBtn;
+    @BindView(R.id.rg) RadioGroup radioGroup;
+    @BindView(R.id.layoutScreen) CustomViewPager layoutSlideShow;
+    @BindView(R.id.btn_order) Button placeOrderBtn;
 
     private boolean pageChangeEnabled;
     private Handler slideShowHandler;

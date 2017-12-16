@@ -60,15 +60,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Cu
         return (null != orderList ? orderList.size() : 0);
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected TextView dateTV;
-        protected TextView serviceTV;
-        protected TextView nameTV;
-        protected TextView mobileTV;
-        protected TextView addressTV;
-        protected TextView pincodeTV;
+    class CustomViewHolder extends RecyclerView.ViewHolder {
+        TextView dateTV;
+        TextView serviceTV;
+        TextView nameTV;
+        TextView mobileTV;
+        TextView addressTV;
+        TextView pincodeTV;
 
-        public CustomViewHolder(View view) {
+        CustomViewHolder(View view) {
             super(view);
 
             this.dateTV = (TextView) view.findViewById(R.id.date_tv);

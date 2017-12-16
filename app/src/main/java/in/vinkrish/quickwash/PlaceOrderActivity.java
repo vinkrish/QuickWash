@@ -27,30 +27,22 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.vinkrish.quickwash.data.Order;
 import in.vinkrish.quickwash.data.OrderResponse;
 import in.vinkrish.quickwash.data.QuickWashCRUD;
 import in.vinkrish.quickwash.data.QuickWashContract.QuickWashEntry;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PlaceOrderActivity extends AppCompatActivity {
-    @Bind(R.id.name_et)
-    EditText nameET;
-    @Bind(R.id.mobile_et)
-    EditText mobileET;
-    @Bind(R.id.alternate_mob_et)
-    EditText alternateMobileET;
-    @Bind(R.id.email_et)
-    EditText emailET;
-    @Bind(R.id.address_et)
-    EditText addressET;
-    @Bind(R.id.pincode_spn)
-    Spinner pincodeSpinner;
+    @BindView(R.id.name_et) EditText nameET;
+    @BindView(R.id.mobile_et) EditText mobileET;
+    @BindView(R.id.alternate_mob_et) EditText alternateMobileET;
+    @BindView(R.id.email_et) EditText emailET;
+    @BindView(R.id.address_et) EditText addressET;
+    @BindView(R.id.pincode_spn) Spinner pincodeSpinner;
 
     private CoordinatorLayout coordinatorLayout;
     private ApiEndPointInterface apiService;
@@ -59,7 +51,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private String service;
     private String name, mobile, alternateMobile, email, address, pincode;
     private List<String> pincodeList = new ArrayList<>();
-    private static final String BASE_URL = "http://localhost";
+    private static final String BASE_URL = "http://vingel.in";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +59,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place_order);
         ButterKnife.bind(this);
 
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -105,8 +97,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
         if (isOnline()) {
             if (validateInput()) {
                 makeRequestObject();
-                //requestOrderSync();
-                //requestOrderAsync();
                 new OrderAsyncTak().execute();
             }
         } else {
@@ -115,9 +105,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     private void showSnackBar(String msg) {
-        Snackbar
-                .make(coordinatorLayout, msg, Snackbar.LENGTH_LONG)
-                .show();
+        Snackbar.make(coordinatorLayout, msg, Snackbar.LENGTH_LONG).show();
     }
 
     private boolean validateInput() {
@@ -195,61 +183,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date today = new Date();
         return dateFormat.format(today);
-    }
-
-    //Synchronous call
-    private void requestOrderSync() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .build();
-
-        apiService = retrofit.create(ApiEndPointInterface.class);
-
-        apiService.saveOrder(order, new Callback<OrderResponse>() {
-            @Override
-            public void onResponse(Response<OrderResponse> response, Retrofit retrofit) {
-                int responseCode = response.code();
-                OrderResponse responseOrder = response.body();
-                if (responseCode == 200 && responseOrder.getStatus().equals("success")) {
-                    Log.d("oh yeah", "inserted");
-                    QuickWashCRUD.inertOrder(PlaceOrderActivity.this, createOrderValues());
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d("failed", "asdfadsf asdfadfasf.adf......");
-            }
-        });
-
-    }
-
-    //Asynchronous call
-    private void requestOrderAsync() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiEndPointInterface.class);
-
-        apiService.saveNewOrder(order).enqueue(new Callback<OrderResponse>() {
-            @Override
-            public void onResponse(Response<OrderResponse> response, Retrofit retrofit) {
-                int responseCode = response.code();
-                OrderResponse responseOrder = response.body();
-                if (responseCode == 200 && responseOrder.getStatus().equals("success")) {
-                    Log.d("oh yeah", "inserted");
-                    //QuickWashCRUD.inertOrder(PlaceOrderActivity.this, createOrderValues());
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d("failed", "response");
-            }
-        });
-
     }
 
     class OrderAsyncTak extends AsyncTask<Void, Void, Void> {
